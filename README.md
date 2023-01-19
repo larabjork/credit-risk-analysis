@@ -47,7 +47,7 @@ A precision score is calculated from all positive predictions (i.e., both true p
 | Cluster Centroid Undersampling | 0.01 | 1.00 | 0.99 |
 
 #### Recall Scores
-Recall is calculated from all actually positive instances (i.e., both true positives and false negatives). It tells us how many positive cases were predicted correctly (i.e., as positives).
+Recall is calculated from all actually positive instances (i.e., both true positives and false negatives). It tells us how many actually positive cases were predicted correctly (as positives).
 
 | Model | Recall: High-Risk | Recall: Low-Risk | Average / Total |
 | ----- | ----------------- | ---------------- | --------------- |
@@ -65,7 +65,14 @@ Recall is calculated from all actually positive instances (i.e., both true posit
 ## Summary 
 
 ### Overall Performance of the Models
-Overall, the Easy Ensemble AdaBoost Classifier performed better than the other models in terms of accuracy, precision, and recall. 
+In general, the two ensemble models performed better than the resampling models. Overall, the Easy Ensemble AdaBoost Classifier performed better than all the other models in terms of accuracy, precision, and recall. Also, all models were more sensitive than precise (had better recall scores than precision scores); this imbalance is reflected in their F1 scores (the closer a score is to 1, the better).
+
+Since a primary goal of our models is to help identify high-risk instances, understanding each model's ability to reliably identify high-risk applicants is important. When looking only at the high-risk predictions, none of the models do a very good job. Even the Easy Ensemble AdaBoost Classifier only achieves an F1 score of 0.14 for actually high-risk instances.
 
 ### Recommendations
-Recommendation on which model to use, or no rec but justification for that
+Among the models already used, the Easy Ensemble AdaBoost Classifier is the best choice, although this is not an enthusiastic recommendation, due to the weak performance of this model in predicting high-risk cases. Further work should include:
+
+* re-running both ensemble models, eliminating the features listed below, which were ranked at 0 importance of by the Balanced Random Forest Classifier.
+![screenshot of features ranked at 0 importance](https://github.com/larabjork/credit-risk-analysis/blob/main/images/low_rank_feature_importances.png)
+
+* investigating other models, with an emphasis on ensemble models, since this type of model performed better than the resampling models.
